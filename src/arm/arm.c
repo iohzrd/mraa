@@ -10,16 +10,22 @@
 #include <string.h>
 
 #include "arm/96boards.h"
-#include "arm/rockpi4.h"
-#include "arm/de_nano_soc.h"
+#include "arm/adlink_ipi.h"
 #include "arm/banana.h"
 #include "arm/beaglebone.h"
+#include "arm/de_nano_soc.h"
 #include "arm/phyboard.h"
+#include "arm/radxa_cm3_io.h"
+#include "arm/radxa_rock3a.h"
+#include "arm/radxa_zero.h"
 #include "arm/raspberry_pi.h"
-#include "arm/adlink_ipi.h"
+#include "arm/rockpi4.h"
+#include "arm/rockpie.h"
+#include "arm/rockpie_v11.h"
+#include "arm/rockpin10.h"
+#include "arm/rockpis.h"
 #include "arm/siemens/iot2050.h"
 #include "mraa_internal.h"
-
 
 mraa_platform_t
 mraa_arm_platform()
@@ -39,7 +45,7 @@ mraa_arm_platform()
                 } else if (strstr(line, "BCM2835")) {
                     platform_type = MRAA_RASPBERRY_PI;
                 } else if (strstr(line, "Generic AM33XX")) {
-                    if(mraa_file_contains("/proc/device-tree/model", "phyBOARD-WEGA")) {
+                    if (mraa_file_contains("/proc/device-tree/model", "phyBOARD-WEGA")) {
                         platform_type = MRAA_PHYBOARD_WEGA;
                     } else {
                         platform_type = MRAA_BEAGLEBONE;
@@ -51,8 +57,7 @@ mraa_arm_platform()
                 } else if (strstr(line, "sun7i")) {
                     if (mraa_file_contains("/proc/device-tree/model", "Banana Pro")) {
                         platform_type = MRAA_BANANA;
-                    } else if (mraa_file_contains("/proc/device-tree/model",
-                                                  "Banana Pi")) {
+                    } else if (mraa_file_contains("/proc/device-tree/model", "Banana Pi")) {
                         platform_type = MRAA_BANANA;
                     }
                     // For old kernels
@@ -60,10 +65,10 @@ mraa_arm_platform()
                         platform_type = MRAA_BANANA;
                     }
                 } else if (strstr(line, "DE0/DE10-Nano-SoC")) {
-                        platform_type = MRAA_DE_NANO_SOC;
-                // For different kernel version(s) of DE10-Nano
+                    platform_type = MRAA_DE_NANO_SOC;
+                    // For different kernel version(s) of DE10-Nano
                 } else if (strstr(line, "Altera SOCFPGA")) {
-                        platform_type = MRAA_DE_NANO_SOC;
+                    platform_type = MRAA_DE_NANO_SOC;
                 }
             }
         }
@@ -80,8 +85,7 @@ mraa_arm_platform()
             platform_type = MRAA_96BOARDS;
         else if (mraa_file_contains("/proc/device-tree/compatible", "arrow,apq8096-db820c"))
             platform_type = MRAA_96BOARDS;
-        else if (mraa_file_contains("/proc/device-tree/model",
-                                    "HiKey Development Board"))
+        else if (mraa_file_contains("/proc/device-tree/model", "HiKey Development Board"))
             platform_type = MRAA_96BOARDS;
         else if (mraa_file_contains("/proc/device-tree/model", "HiKey960"))
             platform_type = MRAA_96BOARDS;
@@ -92,9 +96,25 @@ mraa_arm_platform()
         else if (mraa_file_contains("/proc/device-tree/model", "Avnet Ultra96 Rev1"))
             platform_type = MRAA_96BOARDS;
         else if (mraa_file_contains("/proc/device-tree/model", "ROCK Pi 4") ||
-                 mraa_file_contains("/proc/device-tree/model", "ROCK PI 4")
-                 )
+                 mraa_file_contains("/proc/device-tree/model", "ROCK PI 4"))
             platform_type = MRAA_ROCKPI4;
+        else if (mraa_file_contains("/proc/device-tree/model", "Radxa ROCK Pi S"))
+            platform_type = MRAA_ROCKPIS;
+        else if (mraa_file_contains("/proc/device-tree/model", "Radxa ROCK Pi N10"))
+            platform_type = MRAA_ROCKPIN10;
+        else if (mraa_file_contains("/proc/device-tree/model", "ROCK Pi E V11"))
+            platform_type = MRAA_ROCKPIE_V11;
+        else if (mraa_file_contains("/proc/device-tree/model", "ROCK Pi E"))
+            platform_type = MRAA_ROCKPIE;
+        else if (mraa_file_contains("/proc/device-tree/model", "Radxa Zero"))
+            platform_type = MRAA_RADXA_ZERO;
+        else if (mraa_file_contains("/proc/device-tree/model", "Radxa ROCK3 Model A") ||
+                 mraa_file_contains("/proc/device-tree/model", "Radxa ROCK3 Model B") ||
+                 mraa_file_contains("/proc/device-tree/model", "Radxa ROCK 3 Model A") ||
+                 mraa_file_contains("/proc/device-tree/model", "Radxa ROCK 3 Model B"))
+            platform_type = MRAA_RADXA_ROCK_3_MODEL_A;
+        else if (mraa_file_contains("/proc/device-tree/model", "Radxa CM3 IO"))
+            platform_type = MRAA_RADXA_CM3_IO;
         else if (mraa_file_contains("/proc/device-tree/compatible", "raspberrypi,"))
             platform_type = MRAA_RASPBERRY_PI;
         else if (mraa_file_contains("/proc/device-tree/model", "ADLINK ARM, LEC-PX30"))
@@ -121,6 +141,27 @@ mraa_arm_platform()
             break;
         case MRAA_ROCKPI4:
             plat = mraa_rockpi4();
+            break;
+        case MRAA_ROCKPIS:
+            plat = mraa_rockpis();
+            break;
+        case MRAA_ROCKPIN10:
+            plat = mraa_rockpin10();
+            break;
+        case MRAA_ROCKPIE:
+            plat = mraa_rockpie();
+            break;
+        case MRAA_ROCKPIE_V11:
+            plat = mraa_rockpie_v11();
+            break;
+        case MRAA_RADXA_ZERO:
+            plat = mraa_radxa_zero();
+            break;
+        case MRAA_RADXA_ROCK_3_MODEL_A:
+            plat = mraa_radxa_rock3a();
+            break;
+        case MRAA_RADXA_CM3_IO:
+            plat = mraa_radxa_cm3_io();
             break;
         case MRAA_DE_NANO_SOC:
             plat = mraa_de_nano_soc();

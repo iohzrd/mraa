@@ -59,6 +59,7 @@ set (mraa_LIB_X86_SRCS_NOAUTO
   ${PROJECT_SOURCE_DIR}/src/x86/iei_tank.c
   ${PROJECT_SOURCE_DIR}/src/x86/adlink-ipi.c
   ${PROJECT_SOURCE_DIR}/src/x86/up_xtreme.c
+  ${PROJECT_SOURCE_DIR}/src/x86/rockpix.c
 )
 
 message (STATUS "INFO - Adding support for platform ${MRAAPLATFORMFORCE}")
@@ -108,10 +109,17 @@ set (mraa_LIB_ARM_SRCS_NOAUTO
   ${PROJECT_SOURCE_DIR}/src/arm/banana.c
   ${PROJECT_SOURCE_DIR}/src/arm/de_nano_soc.c
   ${PROJECT_SOURCE_DIR}/src/arm/rockpi4.c
+  ${PROJECT_SOURCE_DIR}/src/arm/rockpis.c
+  ${PROJECT_SOURCE_DIR}/src/arm/rockpin10.c
+  ${PROJECT_SOURCE_DIR}/src/arm/rockpie.c
+  ${PROJECT_SOURCE_DIR}/src/arm/rockpie_v11.c
   ${PROJECT_SOURCE_DIR}/src/arm/adlink_ipi.c
   ${PROJECT_SOURCE_DIR}/src/arm/siemens/iot2050.c
   ${PROJECT_SOURCE_DIR}/src/arm/siemens/platform.c
   ${PROJECT_SOURCE_DIR}/src/arm/siemens/platform_iot2050.c
+  ${PROJECT_SOURCE_DIR}/src/arm/radxa_zero.c
+  ${PROJECT_SOURCE_DIR}/src/arm/radxa_rock3a.c
+  ${PROJECT_SOURCE_DIR}/src/arm/radxa_cm3_io.c
 )
 
 set (mraa_LIB_MIPS_SRCS_NOAUTO
